@@ -3,12 +3,16 @@ __author__ = 'Felipe Parpinelli'
 import requests
 import json
 
-def githubTest():
-    mockUrl = 'https://api.github.com/repos/django/django'
-    r = requests.get(mockUrl)
+
+def auth():
+    return 'OK'
+
+
+def getStars(url):
+    r = requests.get(url)
 
     repoItem = json.loads(r.content)
     stars = str(repoItem['stargazers_count'])
-    print "Django stars: " + stars
+    print "Component stars: " + stars
 
-    return 'OK'
+    return stars

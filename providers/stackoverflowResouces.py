@@ -4,14 +4,19 @@ import requests
 import json
 
 
-def stackoverflowTest():
-    mockUrl = 'http://api.stackoverflow.com/1.1/tags?filter=django'
+def auth():
+    return 'OK'
+
+
+def getTags(comp):
+    mockUrl = 'http://api.stackoverflow.com/1.1/tags?filter=%s' % comp
     r = requests.get(mockUrl)
 
     repoItem = json.loads(r.content)
+    tags = list(repoItem['tags'])
 
-    for tag in repoItem.tags:
-        print tag
+    for tag in tags:
+        if tag['name'] == comp:
+            count = tag['count']
 
-
-    return 'OK'
+    return count
