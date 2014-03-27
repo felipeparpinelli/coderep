@@ -13,7 +13,7 @@ Base = declarative_base()
 class Component(Base):
     __tablename__ = 'components'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer)
     name = Column(String, primary_key=True)
     stars = Column(Integer)
     tags = Column(Integer)
