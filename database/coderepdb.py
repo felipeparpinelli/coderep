@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import exc
 from models.component import Component
+from models.language import Language
 
 engine = create_engine('mysql://root:rootroot@localhost/coderep?charset=utf8&use_unicode=0')
 
@@ -41,3 +42,7 @@ def checkComponent(components):
 
 def getAllComponents():
     return session.query(Component).all()
+
+
+def getAllLanguages():
+    return session.query(Language).all()
