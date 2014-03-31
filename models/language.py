@@ -16,12 +16,13 @@ class Language(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    def __init__(self, name):
+    def __init__(self, id, name):
+        self.id = id
         self.name = name
 
     def __repr__(self):
-        return "<components(name='%s')>" % (
-            self.name)
+        return "<components(id='%d', name='%s')>" % (
+            self.id, self.name)
 
 
 
