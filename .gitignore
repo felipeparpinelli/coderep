@@ -7,6 +7,7 @@
 *.egg
 *.egg-info
 .idea
+.DS_Store
 dist
 build
 eggs
