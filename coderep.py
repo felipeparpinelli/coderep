@@ -73,6 +73,12 @@ def writeJsonFile():
     return 'ok'
 
 
+@app.route('/filterbylang')
+def filterByLang(lang):
+
+    return 'ok'
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
