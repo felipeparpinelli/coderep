@@ -2,7 +2,9 @@ from flask import Flask
 from providers import githubResources
 from providers import stackoverflowResouces
 from database import coderepdb
+from settings import APP_STATIC
 import json
+import os
 
 app = Flask(__name__)
 
@@ -58,6 +60,17 @@ def generateJsonComponents():
     dict = json.dumps(dict, ensure_ascii=False)
 
     return dict
+
+
+@app.route('/writefile')
+def writeJsonFile():
+    jsonDict = generateJsonComponents()
+
+    with open(os.path.join(APP_STATIC, 'components.json'), 'w') as f:
+        f.write(jsonDict)
+        f.close
+
+    return 'ok'
 
 
 if __name__ == '__main__':
