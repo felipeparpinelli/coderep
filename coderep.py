@@ -2,6 +2,7 @@ from flask import Flask
 from providers import githubResources
 from providers import stackoverflowResouces
 from database import coderepdb
+import json
 
 app = Flask(__name__)
 
@@ -54,9 +55,9 @@ def generateJsonComponents():
         array = []
 
     dict = {keyName: valueName, keyChildren: valueChildren}
-    print(dict)
+    dict = json.dumps(dict, ensure_ascii=False)
 
-    return 'ok'
+    return dict
 
 
 if __name__ == '__main__':
