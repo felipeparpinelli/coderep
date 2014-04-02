@@ -10,17 +10,23 @@ def auth():
     return 'OK'
 
 
-def getStars(url):
+def get_stars(url):
     r = requests.get(url)
 
-    repoItem = json.loads(r.content)
-    stars = str(repoItem['stargazers_count'])
+    content = json.loads(r.content)
+    stars = str(content['stargazers_count'])
     print "Component stars: " + stars
 
     comp = Component("felipe", int(stars), 4331, 1, "hard coder")
 
-    database.coderepdb.insertComponent(comp)
+    database.coderepdb.insert_component(comp)
 
     return stars
+
+
+def check_valid(url):
+    return 'ok'
+
+
 
 

@@ -16,13 +16,13 @@ def health_check():
 @app.route('/github')
 def github():
     mockUrl = 'https://api.github.com/repos/django/django'
-    stars = githubResources.getStars(mockUrl)
+    stars = githubResources.get_stars(mockUrl)
     return str(stars)
 
 
 @app.route('/so')
 def stackoverflow():
-    so = stackoverflowResouces.getTags('django')
+    so = stackoverflowResouces.get_tags('django')
     return str(so)
 
 
@@ -33,8 +33,8 @@ def save_component():
 
 @app.route('/json')
 def generate_json_components():
-    components = coderepdb.getAllComponents()
-    languages = coderepdb.getAllLanguages()
+    components = coderepdb.get_all_components()
+    languages = coderepdb.get_all_languages()
 
     key_name = "name"
     value_name = "components"

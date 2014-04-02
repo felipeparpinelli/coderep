@@ -8,12 +8,12 @@ def auth():
     return 'OK'
 
 
-def getTags(comp):
-    mockUrl = 'http://api.stackoverflow.com/1.1/tags?filter=%s' % comp
-    r = requests.get(mockUrl)
+def get_tags(comp):
+    mock_url = 'http://api.stackoverflow.com/1.1/tags?filter=%s' % comp
+    r = requests.get(mock_url)
 
-    repoItem = json.loads(r.content)
-    tags = list(repoItem['tags'])
+    content = json.loads(r.content)
+    tags = list(content['tags'])
 
     for tag in tags:
         if tag['name'] == comp:

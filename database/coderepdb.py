@@ -20,7 +20,7 @@ Base = declarative_base()
 connection = engine.connect()
 
 
-def insertComponent(comp):
+def insert_component(comp):
 
     try:
         session.add(comp)
@@ -33,16 +33,9 @@ def insertComponent(comp):
         raise
 
 
-def checkComponent(components):
-    q = session.query(components).filter_by(components.name == 'felipe')
-    if session.query(q.exists()):
-        return true
-    return false
-
-
-def getAllComponents():
+def get_all_components():
     return session.query(Component).all()
 
 
-def getAllLanguages():
+def get_all_languages():
     return session.query(Language).all()
