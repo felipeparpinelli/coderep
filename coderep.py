@@ -27,44 +27,44 @@ def stackoverflow():
 
 
 @app.route('/savecomp')
-def saveComponent():
+def save_component():
     return 'ok'
 
 
 @app.route('/json')
-def generateJsonComponents():
+def generate_json_components():
     components = coderepdb.getAllComponents()
     languages = coderepdb.getAllLanguages()
 
-    keyName = "name"
-    valueName = "components"
+    key_name = "name"
+    value_name = "components"
 
-    keyChildren = "children"
-    valueChildren = []
+    key_children = "children"
+    children = []
 
-    keySize = "size"
+    key_size = "size"
 
     array = []
 
     for language in languages:
         for component in components:
             if language.id == component.language_id:
-                compDict = {keyName: component.name, keySize: component.rep}
-                array.append(compDict)
+                comp_dict = {key_name: component.name, key_size: component.rep}
+                array.append(comp_dict)
 
-        mutableDict = {keyName: language.name, keyChildren: array}
-        valueChildren.append(mutableDict)
+        mutable_dict = {key_name: language.name, key_children: array}
+        children.append(mutable_dict)
         array = []
 
-    dict = {keyName: valueName, keyChildren: valueChildren}
+    dict = {key_name: value_name, key_children: children}
     dict = json.dumps(dict, ensure_ascii=False)
 
     return dict
 
 
 @app.route('/writefile')
-def writeJsonFile():
-    jsonDict = generateJsonComponents()
+def write_json_file():
+    jsonDict = generate_json_components()
 
     with open(os.path.join(APP_STATIC, 'components.json'), 'w') as f:
         f.write(jsonDict)
@@ -73,10 +73,30 @@ def writeJsonFile():
     return 'ok'
 
 
-@app.route('/filterbylang')
-def filterByLang(lang):
+@app.route('/filterbylang/<lang>')
+def filter_by_lang(lang):
+    with open(os.path.join(APP_STATIC, 'components.json'), 'r') as f:
+        dict = json.load(f)
+        f.close
 
-    return 'ok'
+    children = []
+    dict_lang = None
+
+    array_lang = dict['children']
+
+    for filterLang in array_lang:
+        if filterLang['name'] == lang:
+            dict_lang = filterLang
+            break
+
+    if dict_lang is None:
+        return "Error - Not found language with name: " + lang
+
+    children.append(dict_lang)
+    json_lang = {"name": "components", "children": children}
+    json_lang = json.dumps(json_lang, ensure_ascii=False)
+
+    return json_lang
 
 
 if __name__ == '__main__':
