@@ -4,6 +4,8 @@ import requests
 import json
 import database.coderepdb
 from models.component import Component
+from urlparse import urlparse
+import re
 
 
 def auth():
@@ -25,8 +27,10 @@ def get_stars(url):
 
 
 def check_valid(url):
-    return 'ok'
 
+    url = urlparse(url, 'https', True)
 
+    if url.hostname == 'github.com' and url.scheme == 'https':
+        return True
 
-
+    return False

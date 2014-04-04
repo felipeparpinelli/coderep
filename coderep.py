@@ -16,6 +16,7 @@ def health_check():
 @app.route('/github')
 def github():
     mockUrl = 'https://api.github.com/repos/django/django'
+    check_url = githubResources.check_valid("https://github.com/mbostock/d3")
     stars = githubResources.get_stars(mockUrl)
     return str(stars)
 
