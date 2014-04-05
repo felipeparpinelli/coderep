@@ -24,6 +24,7 @@ def github():
 @app.route('/so')
 def stackoverflow():
     so = stackoverflowResouces.get_tags('django')
+    test = stackoverflowResouces.check_valid("http://api.stackoverflow.com/1.1/tags?filter=abcsdferg")
     return str(so)
 
 

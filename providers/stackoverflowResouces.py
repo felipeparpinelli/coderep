@@ -20,3 +20,14 @@ def get_tags(comp):
             count = tag['count']
 
     return count
+
+
+def check_valid(url):
+    req = requests.get(url)
+    content = json.loads(req.content)
+    tags = list(content['tags'])
+
+    if req.status_code != 200 or len(tags) == 0:
+        return False
+
+    return True
