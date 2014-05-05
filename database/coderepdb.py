@@ -33,7 +33,16 @@ def insert_component(comp):
         raise
 
 
+def update_values(comp):
+    session.query(Component).filter(Component.id == comp.id).update({'stars': comp.stars})
+    session.query(Component).filter(Component.id == comp.id).update({'tags': comp.tags})
+    session.query(Component).filter(Component.id == comp.id).update({'rep': comp.rep})
+    session.commit()
+
+
 def get_all_components():
+    # force to get new values.
+    session.commit()
     return session.query(Component).all()
 
 

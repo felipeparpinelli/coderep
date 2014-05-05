@@ -64,6 +64,51 @@ def generate_json_components():
     return dict
 
 
+@app.route('/update_stars')
+def update_stars():
+    components = coderepdb.get_all_components()
+
+    for component in components:
+        url = component.github_url
+        if url is not None:
+            url_parse_api = url.replace("https://github.com/", "https://api.github.com/repos/")
+            stars = githubResources.get_stars(url_parse_api)
+            if str(component.stars) != stars:
+                component.stars = stars
+                coderepdb.update_values(component)
+    return 'ok'
+
+
+@app.route('/update_tags')
+def update_tags():
+    components = coderepdb.get_all_components()
+
+    for component in components:
+        tags = component.tags
+        if tags is not None:
+            tag = stackoverflowResouces.get_tags(component.name)
+            if component.tags != tag:
+                if component.tags > 0 and tag != 0:
+                    component.tags = tag
+                    coderepdb.update_values(component)
+    return 'ok'
+
+
+def update_rep():
+    components = coderepdb.get_all_components()
+
+    for component in components:
+        tags = component.tags
+        stars = component.stars
+
+        new_rep = tags + stars
+
+        if new_rep is not None and component.rep is not None:
+            component.rep = new_rep
+            coderepdb.update_values(component)
+    return 'ok'
+
+
 @app.route('/writefile')
 def write_json_file():
     jsonDict = generate_json_components()

@@ -2,19 +2,23 @@ __author__ = 'Felipe Parpinelli'
 
 import sched
 import time
+import coderep
 
 s = sched.scheduler(time.time, time.sleep)
 
 
-def update_gh_stars(sc):
+def update_values(sc):
     print "worker..."
+    coderep.update_stars()
+    coderep.update_tags()
+    coderep.update_rep()
 
-    # do your stuff
-    sc.enter(60, 1, update_gh_stars, (sc,))
+    # 43200 seconds == 12 hours
+    sc.enter(43200, 1, update_values, (sc,))
 
 
 def run():
-    s.enter(1, 1, update_gh_stars, (s,))
+    s.enter(1, 1, update_values, (s,))
     s.run()
 
 
