@@ -8,7 +8,7 @@ Born from the need of software developers to have available in one place informa
 If a component is not in our database, you can submit it. Visit coderep.net/submit. 
 
 ## Collaboration
-This project is open source and developed for the software community. Feel free to suggest improvements, and make a fork and pull request =)
+This project is open source and developed for the software community. Feel free to suggest improvements, and make a fork and pull request
 
 ## Architecture
 ![alt tag](https://raw.githubusercontent.com/felipeparpinelli/coderep/master/static/images/architecture.jpg)
