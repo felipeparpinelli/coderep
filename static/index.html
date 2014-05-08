@@ -28,6 +28,50 @@
             width: 1000px;
             height: 1000px;
         }
+        #content-svg > svg > g:hover {
+            fill: #ffd220;
+        }
+
+
+
+
+  .header ul li ul {
+    background: #FFF;
+    visibility: hidden;
+    float: left;
+    min-width: 150px;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+    text-decoration: none;
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+  }
+
+  .header ul li:hover > ul,
+  .header ul li ul:hover {
+     visibility: visible;
+  }
+
+  .header ul li ul li {
+    clear: both;
+    padding: 5px 0 5px 18px;
+    width: 100%;
+    color: #FFF
+  }
+
+  .header ul li ul li:hover {
+    background: #74b7e4;
+    text-decoration: none;
+  }
+
+  .header ul li ul li a:hover {
+    background: #74b7e4;
+    text-decoration: none;
+  }
+
     </style>
 
 
@@ -46,13 +90,21 @@
     <div class="container">
 
       <div class="header">
-        <ul class="nav nav-pills pull-right">
+        <ul class="menu nav nav-pills pull-right">
           <li class="active"><a href="#">Home</a></li>
+          <li class="menu-item"><a href="#">Languages</a>
+                <ul class="dropdown">
+                    <li class="menu-item sub-menu"><a href="#">Python</a></li>
+                    <li class="menu-item sub-menu"><a href="#">Javascript</a></li>
+                    <li class="menu-item sub-menu"><a href="#">Java</a></li>
+                    <li class="menu-item sub-menu"><a href="#">php</a></li>
+                    <li class="menu-item sub-menu"><a href="#">Go lang</a></li>
+                </ul>
+          </li>
           <li><a href="#">Submit a framework</a></li>
           <li><a href="#">About</a></li>
-          <!-- <li><a href="#">Contact</a></li> -->
         </ul>
-        <h3 class="text-muted">Code Rep</h3>
+        <h3 class="text-muted">Coderep</h3>
       </div>
 
       <div id="content-svg"></div>
