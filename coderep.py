@@ -64,7 +64,6 @@ def generate_json_components():
     return dict
 
 
-@app.route('/update_stars')
 def update_stars():
     components = coderepdb.get_all_components()
 
@@ -79,7 +78,6 @@ def update_stars():
     return 'ok'
 
 
-@app.route('/update_tags')
 def update_tags():
     components = coderepdb.get_all_components()
 
