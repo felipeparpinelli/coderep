@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var diameter = 1000,
+var diameter = 800,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
