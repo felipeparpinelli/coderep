@@ -10,9 +10,6 @@ If a component is not in our database, you can submit it. Visit coderep.net/subm
 ## Collaboration
 This project is open source and developed for the software community. Feel free to suggest improvements, and make a fork and pull request.
 
-## Architecture
-![alt tag](https://raw.githubusercontent.com/felipeparpinelli/coderep/master/static/images/architecture.jpg)
-
 ### Next steps
 Currently developing the ability to measure the popularity of a component as a function of time and not just at a particular point in time.
 
