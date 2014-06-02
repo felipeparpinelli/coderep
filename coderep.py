@@ -1,9 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 from providers import githubResources
 from providers import stackoverflowResouces
 from database import coderepdb
 from settings import APP_STATIC
+from models import registrationForm
 import json
+from flask import request
 import os
 
 app = Flask(__name__)
@@ -142,6 +144,12 @@ def filter_by_lang(lang):
     json_lang = json.dumps(json_lang, ensure_ascii=False)
 
     return json_lang
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = registrationForm.RegistrationForm(request.form)
+    return render_template('register.html', form=form)
 
 
 if __name__ == '__main__':
