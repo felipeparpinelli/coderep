@@ -48,3 +48,30 @@ def get_all_components():
 
 def get_all_languages():
     return session.query(Language).all()
+
+
+def exist_component(comp):
+    components = get_all_components()
+    for component in components:
+        if component.name == comp:
+            return True
+
+    return False
+
+
+def exist_language(lang):
+    languages = get_all_languages()
+    for language in languages:
+        if language.name == lang:
+            return True
+
+    return False
+
+
+def get_language_id(lang):
+    languages = get_all_languages()
+    for language in languages:
+        if language.name == lang:
+            return language.id
+
+    return False

@@ -7,6 +7,8 @@ from models.component import Component
 from urlparse import urlparse
 import settings
 
+lang = ''
+
 
 def auth():
     return 'OK'
@@ -19,6 +21,8 @@ def get_stars(url):
         r = requests.get(url, auth=(settings.GH_USERNAME, settings.GH_PWD))
         content = json.loads(r.content)
         stars = str(content['stargazers_count'])
+        global lang
+        lang = str(content['language'])
     except:
         pass
 

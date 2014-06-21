@@ -74,6 +74,26 @@
     text-decoration: none;
   }
 
+  .notification{
+      display:none;
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      margin-top: 15px;
+  }
+        .notification.error{
+            background-color: #BF000D;
+            display: block;
+            color: #FFF;
+            padding: 10px;
+        }
+        .notification.success{
+            background-color: #10d52c;
+            display: block;
+            color: #FFF;
+            padding: 10px;
+        }
+
     </style>
 
 
@@ -117,11 +137,23 @@
         <br><br>Github url:<br>
 		<input id="githuburl" type="text" />
         <br><br>
-		<input id="enviar" type="submit" />
+        Language:
+        <select id="lang">
+          <option id="0" value="choose">Choose a language</option>
+          <option id="1" value="Python">Python</option>
+          <option id="2" value="JavaScript">Javascript</option>
+          <option id="3" value="Java">Java</option>
+          <option id="4" value="PHP">php</option>
+          <option id="5" value="Go">go lang</option>
+        </select>
+        <br><br>
+		<input id="send" type="submit" />
+        </div>
+        <div class="notification"></dv>
 
         <script>
 
-		$( "#enviar" ).click(function() {
+		$( "#send" ).click(function() {
 
 			console.log({ "component": $("#component").val(), "githuburl": $("#githuburl").val()});
 
@@ -129,10 +161,18 @@
 			    type: "POST",
 			    url: "/submit",
                 dataType: 'json',
-			    data: { "component": $("#component").val(), "githuburl": $("#githuburl").val()},
+			    data: { "component": $("#component").val(), "githuburl": $("#githuburl").val(), "language": $("#lang option:selected").val(), "lang_id": $("#lang option:selected").attr("id")},
                 contentType: "application/json; charset=utf-8",
 			    success: function(ret){
-			         alert(ret.field);
+                    $(".notification").attr("class", "notification");
+			        if(ret.error == 1){
+                        $(".notification").text(ret.msg);
+                        $(".notification").addClass("error");
+                    }
+                    else{
+                        $(".notification").text(ret.msg);
+                        $(".notification").addClass("success");
+                    }
 			    },
 			    error: function(ret) {
 			        console.log(ret);
@@ -141,6 +181,19 @@
 			});
 
 		});
+
+
+        $("#githuburl").on("input", function(){
+           if( $(this).val().length > 0 ){
+              $("#lang").attr("disabled", true) ;
+               $("#lang option:selected").val("");
+               $("#lang option:selected").attr("id", "-1");
+           }
+           else{
+               $("#lang option:selected").attr("id", "0");
+               $("#lang").removeAttr("disabled") ;
+           }
+        });
 
 
 	</script>

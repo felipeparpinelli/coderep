@@ -162,16 +162,27 @@ def submit():
     github_url = data[1].split('=')
     github_url = github_url[1]
     github_url = urllib.unquote(github_url).decode('utf8')
+    lang = data[2].split('=')
+    lang = lang[1]
+    lang_id = data[3].split('=')
+    lang_id = lang_id[1]
     is_gh_valid = True
     is_so_valid = True
-    if component is '' or github_url is '':
-        return 'error'
+    if component is '' and str(github_url) is '':
+        ret = {"msg": "Fill in at least one field", "error": 1}
+        return jsonify(ret), 200
 
-    if not githubResources.check_valid(github_url):
-        return 'error'
+    if lang_id is str(0):
+        ret = {"msg": "Select a language", "error": 1}
+        return jsonify(ret), 200
+
+    if not githubResources.check_valid(github_url) and github_url != '':
+        ret = {"msg": "Please, enter a valid github url", "error": 1}
+        return jsonify(ret), 200
 
     github_url = github_url.replace("https://github.com/", "https://api.github.com/repos/")
     github_stars = githubResources.get_stars(github_url)
+    lang = githubResources.lang
     if github_stars is 'error':
         is_gh_valid = False
 
@@ -179,9 +190,15 @@ def submit():
         is_so_valid = False
 
     if is_so_valid is False and is_gh_valid is False:
-        return jsonify('error')
+        ret = {"msg": "No information found for " + component + ' ' + github_url, "error": 1}
+        return jsonify(ret), 200
 
-    return jsonify('ok')
+    if not coderepdb.get_language_id(lang) and lang_id == str(-1):
+        ret = {"msg": "Unfortunately we didn't find the " + lang + " language in our database. A request to add it was sent.", "error": 1}
+        return jsonify(ret), 200
+
+    ret = {"msg": "OK!", "error": 0}
+    return jsonify(ret), 200
 
 
 if __name__ == '__main__':
