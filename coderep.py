@@ -1,9 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from providers import githubResources
 from providers import stackoverflowResouces
 from database import coderepdb
 from settings import APP_STATIC
 from models import registrationForm
+import urllib
 import json
 from flask import request
 import os
@@ -146,10 +147,41 @@ def filter_by_lang(lang):
     return json_lang
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET'])
 def register():
-    form = registrationForm.RegistrationForm(request.form)
-    return render_template('register.html', form=form)
+    return render_template('register.html')
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+
+    data = request.data
+    data = data.split('&')
+    component = data[0].split('=')
+    component = component[1]
+    github_url = data[1].split('=')
+    github_url = github_url[1]
+    github_url = urllib.unquote(github_url).decode('utf8')
+    is_gh_valid = True
+    is_so_valid = True
+    if component is '' or github_url is '':
+        return 'error'
+
+    if not githubResources.check_valid(github_url):
+        return 'error'
+
+    github_url = github_url.replace("https://github.com/", "https://api.github.com/repos/")
+    github_stars = githubResources.get_stars(github_url)
+    if github_stars is 'error':
+        is_gh_valid = False
+
+    if stackoverflowResouces.get_tags(component) is 0:
+        is_so_valid = False
+
+    if is_so_valid is False and is_gh_valid is False:
+        return jsonify('error')
+
+    return jsonify('ok')
 
 
 if __name__ == '__main__':

@@ -9,16 +9,16 @@ def auth():
 
 
 def get_tags(comp):
-    so_url = 'http://api.stackoverflow.com/1.1/tags?filter=%s' % comp
+    so_url = 'http://api.stackexchange.com/2.2/tags?site=stackoverflow&inname=%s' % comp
     r = requests.get(so_url)
     count = 0
 
     content = json.loads(r.content)
-    tags = list(content['tags'])
+    items = list(content['items'])
 
-    for tag in tags:
-        if tag['name'] == comp:
-            count = tag['count']
+    for item in items:
+        if item['name'] == comp:
+            count = item['count']
 
     return count
 

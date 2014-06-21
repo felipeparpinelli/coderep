@@ -13,13 +13,19 @@ def auth():
 
 
 def get_stars(url):
-    r = requests.get(url, auth=(settings.GH_USERNAME, settings.GH_PWD))
 
-    content = json.loads(r.content)
-    stars = str(content['stargazers_count'])
+    try:
+        stars = ''
+        r = requests.get(url, auth=(settings.GH_USERNAME, settings.GH_PWD))
+        content = json.loads(r.content)
+        stars = str(content['stargazers_count'])
+    except:
+        pass
+
     print "Component stars: " + stars
 
-    #comp = Component("felipe", int(stars), 4331, 1, "hard coder")
+    if stars is '':
+        return 'error'
 
     #database.coderepdb.insert_component(comp)
 
