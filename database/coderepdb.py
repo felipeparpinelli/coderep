@@ -50,10 +50,12 @@ def get_all_languages():
     return session.query(Language).all()
 
 
-def exist_component(comp):
+def exist_component(comp, gh_url):
     components = get_all_components()
     for component in components:
-        if component.name == comp:
+        if component.name.lower() == comp.lower():
+            return True
+        if component.github_url == gh_url:
             return True
 
     return False

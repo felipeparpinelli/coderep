@@ -168,6 +168,11 @@ def submit():
     lang_id = lang_id[1]
     is_gh_valid = True
     is_so_valid = True
+
+    if coderepdb.exist_component(component, github_url):
+        ret = {"msg": "That component already exists", "error": 1}
+        return jsonify(ret), 200
+
     if component is '' and str(github_url) is '':
         ret = {"msg": "Fill in at least one field", "error": 1}
         return jsonify(ret), 200
@@ -199,6 +204,7 @@ def submit():
 
     ret = {"msg": "OK!", "error": 0}
     return jsonify(ret), 200
+
 
 
 if __name__ == '__main__':
