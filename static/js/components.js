@@ -5,6 +5,7 @@
  * Time: 15:18
  * To change this template use File | Settings | File Templates.
  */
+var components;
 
 var diameter = 800,
     format = d3.format(",d"),
@@ -20,7 +21,12 @@ var svg = d3.select("#content-svg").append("svg")
     .attr("height", diameter)
     .attr("class", "bubble");
 
-d3.json("components.json", function(error, root) {
+render_components(components);
+
+//d3.json("../static/component.json", function(error, root) {
+function render_components(root)
+{
+
   var node = svg.selectAll(".node")
       .data(bubble.nodes(classes(root))
       .filter(function(d) { return !d.children; }))
@@ -39,7 +45,7 @@ d3.json("components.json", function(error, root) {
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
       .text(function(d) { return d.className.substring(0, d.r / 3); });
-});
+};
 
 
 // Returns a flattened hierarchy containing all leaf nodes under the root.
@@ -47,8 +53,8 @@ function classes(root) {
   var classes = [];
 
   function recurse(name, node) {
-    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-    else classes.push({packageName: name, className: node.name, value: node.size});
+        if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
+        else classes.push({packageName: name, className: node.name, value: node.size});
   }
 
   recurse(null, root);
