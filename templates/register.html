@@ -113,26 +113,26 @@
 
       <div class="header">
         <ul class="menu nav nav-pills pull-right">
-          <li class="active"><a href="index.html">Home</a></li>
-          <li class="menu-item"><a href="#">Languages</a>
+          <li><a href="/">Home</a></li>
+          <li class="menu-item"><a href="/languages">Languages</a>
                 <ul class="dropdown">
-                    <li class="menu-item sub-menu"><a href="#">Python</a></li>
-                    <li class="menu-item sub-menu"><a href="#">Javascript</a></li>
-                    <li class="menu-item sub-menu"><a href="#">Java</a></li>
-                    <li class="menu-item sub-menu"><a href="#">php</a></li>
-                    <li class="menu-item sub-menu"><a href="#">Go lang</a></li>
+                    <li class="menu-item sub-menu" ><a class="bt-language" id="filter" rel="/filterbylang/Python" href="/languages">Python</a></li>
+                    <li class="menu-item sub-menu"><a class="bt-language" id="filter" rel="/filterbylang/JavaScript" href="/languages">Javascript</a></li>
+                    <li class="menu-item sub-menu"><a class="bt-language" id="filter" rel="/filterbylang/Java" href="/languages">Java</a></li>
+                    <li class="menu-item sub-menu"><a class="bt-language" id="filter" rel="/filterbylang/PHP" href="/languages">php</a></li>
+                    <li class="menu-item sub-menu"><a class="bt-language" id="filter" rel="/filterbylang/Go" href="/languages">Go lang</a></li>
                 </ul>
           </li>
-          <li><a href="#">Submit a framework</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="active"><a href="/register">Submit a framework</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
-        <h3 class="text-muted">Coderep</h3>
+        <class="text-muted"><img src="../static/images/coderep2.jpg" width="215" height="52">
       </div>
 
 
       <div class="row-fluid marketing">
 
-        Component name (as tagged in Stackoverflow):<br>
+        Component name: <a href="http://stackoverflow.com/tags" target="_blank">(as tagged in Stackoverflow)</a><br>
         <input id="component" type="text" />
         <br><br>Github url:<br>
 		<input id="githuburl" type="text" />
@@ -158,12 +158,14 @@
 			console.log({ "component": $("#component").val(), "githuburl": $("#githuburl").val()});
 
 			$.ajax({
+                async: false,
 			    type: "POST",
 			    url: "/submit",
                 dataType: 'json',
 			    data: { "component": $("#component").val(), "githuburl": $("#githuburl").val(), "language": $("#lang option:selected").val(), "lang_id": $("#lang option:selected").attr("id")},
                 contentType: "application/json; charset=utf-8",
 			    success: function(ret){
+                    $("#place_of_loading_image").hide();
                     $(".notification").attr("class", "notification");
 			        if(ret.error == 1){
                         $(".notification").text(ret.msg);
@@ -182,28 +184,19 @@
 
 		});
 
-
-        $("#githuburl").on("input", function(){
-           if( $(this).val().length > 0 ){
-              $("#lang").attr("disabled", true) ;
-               $("#lang option:selected").val("");
-               $("#lang option:selected").attr("id", "-1");
-           }
-           else{
-               $("#lang option:selected").attr("id", "0");
-               $("#lang").removeAttr("disabled") ;
-           }
-        });
-
-
 	</script>
+
+    <script src="http://d3js.org/d3.v3.js"></script>
+
+    <script src="../static/js/filterLang.js"> </script>
+    <script src="../static/js/history.js"> </script>
+    <script src="../static/js/components.js"> </script>
 
     </div>
 
       <div class="footer">
-        <p>© Coderep 2014</p>
+        <p>Coderep 2014</p>
       </div>
-
 
     </div> <!-- /container -->
 
