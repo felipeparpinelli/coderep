@@ -2,12 +2,7 @@ __author__ = 'Felipe Parpinelli'
 
 import requests
 import json
-import simplejson
-import urllib2
-
-
-def auth():
-    return 'OK'
+from database import coderepdb
 
 
 def get_tags(comp):
@@ -39,3 +34,17 @@ def check_valid(url):
         return False
 
     return True
+
+
+def update_tags():
+    components = coderepdb.get_all_components()
+
+    for component in components:
+        tags = component.tags
+        if tags is not None:
+            tag = get_tags(component.name)
+            if component.tags != tag:
+                if component.tags > 0 and tag != 0:
+                    component.tags = tag
+                    coderepdb.update_values(component)
+    return 'ok'
