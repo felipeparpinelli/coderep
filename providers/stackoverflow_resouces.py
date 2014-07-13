@@ -2,6 +2,8 @@ __author__ = 'Felipe Parpinelli'
 
 import requests
 import json
+import simplejson
+import urllib2
 
 
 def auth():
@@ -9,11 +11,16 @@ def auth():
 
 
 def get_tags(comp):
-    so_url = 'http://api.stackexchange.com/2.2/tags?site=stackoverflow&inname=%s' % comp
-    r = requests.get(so_url)
+    so_url = 'https://api.stackexchange.com/2.2/tags?site=stackoverflow&inname=%s' % comp
     count = 0
 
-    content = json.loads(r.content)
+    try:
+        r = requests.get(so_url)
+        content = json.loads(r.content.decode('utf-8-sig'))
+    except ValueError:
+        raise
+        pass
+
     items = list(content['items'])
 
     for item in items:

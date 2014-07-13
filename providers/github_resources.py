@@ -2,8 +2,6 @@ __author__ = 'Felipe Parpinelli'
 
 import requests
 import json
-import database.coderepdb
-from models.component import Component
 from urlparse import urlparse
 import settings
 
@@ -44,4 +42,13 @@ def check_valid(url):
         return True
 
     return False
+
+
+def get_repo_name(url):
+
+    if check_valid(url):
+        splited = url.split('/')
+        return splited[4]
+
+    return None
 

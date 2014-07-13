@@ -12,10 +12,10 @@
     <title>CodeRep Project - Ranking of frameworks</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-theme.css" rel="stylesheet">
 
     <style>
         svg{
@@ -142,10 +142,10 @@
                     <li class="menu-item sub-menu"><a href="#">Go lang</a></li>
                 </ul>
           </li>
-          <li><a href="#">Submit a framework</a></li>
+          <li><a href="register.html">Submit a framework</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
-        <h3 class="text-muted">Coderep</h3>
+        <class="text-muted"><img src="../static/images/coderep2.jpg" width="215" height="52">
       </div>
 
       <div id="content-svg"></div>
@@ -156,6 +156,23 @@
     <script src="http://d3js.org/d3.v3.js"></script>
 
         <script>
+
+        var data = [{
+    "date": "20111001",
+        "New York": "63.4",
+        "San Francisco": "62.7",
+        "Austin": "72.2"
+}, {
+    "date": "20111002",
+        "New York": "58.0",
+        "San Francisco": "59.9",
+        "Austin": "67.7"
+}, {
+    "date": "20111003",
+        "New York": "53.3",
+        "San Francisco": "59.1",
+        "Austin": "69.4"
+}];
 
         var margin = {top: 20, right: 80, bottom: 30, left: 50},
             width = 960 - margin.left - margin.right,
@@ -169,7 +186,7 @@
         var y = d3.scale.linear()
             .range([height, 0]);
 
-        var color = d3.scale.category10();
+        var color = d3.scale.category20c();
 
         var xAxis = d3.svg.axis()
             .scale(x)
@@ -191,7 +208,7 @@
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        d3.tsv("data.tsv", function(error, data) {
+        d3.json("data.tsv", function(error, data) {
           color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
 
           data.forEach(function(d) {
@@ -227,7 +244,7 @@
               .attr("y", 6)
               .attr("dy", ".71em")
               .style("text-anchor", "end")
-              .text("Temperature (ºF)");
+              .text("Reputation");
 
           var city = svg2.selectAll(".city")
               .data(cities)
@@ -248,7 +265,7 @@
         });
 
         </script>
-        <script src="js/components.js"> </script>
+        <script src="../static/js/components.js"> </script>
 
 
 
