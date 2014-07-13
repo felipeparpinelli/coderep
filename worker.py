@@ -3,15 +3,20 @@ __author__ = 'Felipe Parpinelli'
 import sched
 import time
 import coderep
+import history
+from providers import github_resources
+from providers import stackoverflow_resouces
 
 s = sched.scheduler(time.time, time.sleep)
 
 
 def update_values(sc):
     print "worker..."
-    coderep.update_stars()
-    coderep.update_tags()
+    github_resources.update_stars()
+    stackoverflow_resouces.update_tags()
     coderep.update_rep()
+
+    history.set_history()
 
     # 43200 seconds == 12 hours
     sc.enter(43200, 1, update_values, (sc,))
