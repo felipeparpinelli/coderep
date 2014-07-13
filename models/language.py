@@ -2,10 +2,8 @@ __author__ = 'Felipe Parpinelli'
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
-
-
-engine = create_engine('mysql://root:rootroot@localhost/coderep?charset=utf8&use_unicode=0')
+import database
+import json
 
 Base = declarative_base()
 
@@ -15,15 +13,33 @@ class Language(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    gh_count = Column(Integer)
+    tags = Column(Integer)
 
-    def __init__(self, id, name):
+    def __init__(self, id, name, gh_count, tags):
         self.id = id
         self.name = name
+        self.gh_count = gh_count
+        self.tags = tags
 
     def __repr__(self):
-        return "<components(id='%d', name='%s')>" % (
-            self.id, self.name)
+        return "<components(id='%d', name='%s', gh_count='%d', tags='%d')>" % (
+            self.id, self.name, self.gh_count, self.tags)
 
 
+def generate_json_languages():
+    languages = database.coderepdb.get_all_languages()
+    arrayText = []
+    arraySize = []
 
+    for language in languages:
+        arrayText.append(language.name)
+        result = (language.gh_count + language.tags) / 30000
+        if result < 10:
+            result = 12
+        arraySize.append(int(result))
+
+    array = [arrayText, arraySize]
+    json_array = json.dumps(array)
+    return json_array
 
