@@ -4,6 +4,7 @@ import requests
 import json
 from urlparse import urlparse
 import settings
+from database import coderepdb
 
 lang = ''
 
@@ -29,8 +30,6 @@ def get_stars(url):
     if stars is '':
         return 'error'
 
-    #database.coderepdb.insert_component(comp)
-
     return stars
 
 
@@ -51,4 +50,18 @@ def get_repo_name(url):
         return splited[4]
 
     return None
+
+
+def update_stars():
+    components = coderepdb.get_all_components()
+
+    for component in components:
+        url = component.github_url
+        if url is not None:
+            url_parse_api = url.replace("https://github.com/", "https://api.github.com/repos/")
+            stars = get_stars(url_parse_api)
+            if str(component.stars) != stars:
+                component.stars = stars
+                coderepdb.update_values(component)
+    return 'ok'
 
